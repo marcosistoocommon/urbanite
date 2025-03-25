@@ -1,0 +1,79 @@
+{
+    "env": {
+        "MatrixMCUWorkspaceFolder": "${workspaceFolder}/../.."
+    },
+    "configurations": [
+        {
+            "name": "win32-stm32f446",
+            "includePath": [
+                "${MatrixMCUWorkspaceFolder}/drivers/stm32f4xx/**",
+                "${MatrixMCUWorkspaceFolder}/lib/*/**",
+                "${workspaceFolder}/common/**",
+                "${workspaceFolder}/port/include",
+                "${workspaceFolder}/port/stm32f4/**"
+            ],
+            "defines": [
+                "STM32F446xx"
+            ],
+            "compilerPath": "C:\\Program Files (x86)\\Arm GNU Toolchain arm-none-eabi\\13.2 Rel1\\bin\\arm-none-eabi-gcc.exe",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "windows-gcc-arm"
+        },
+        {
+            "name": "linux-stm32f446",
+            "includePath": [
+                "${MatrixMCUWorkspaceFolder}/drivers/stm32f4xx/**",
+                "${MatrixMCUWorkspaceFolder}/lib/*/**",
+                "${workspaceFolder}/common/**",
+                "${workspaceFolder}/port/include",
+                "${workspaceFolder}/port/stm32f4/**",
+                "${workspaceFolder}/common/include",
+                "/mnt/c/Users/mpere/Desktop/Proyecto_SDG2_V1/MatrixMCU/drivers/stm32f4xx/CMSIS/Device/ST/STM32F4xx/Include",
+                "${workspaceFolder}/port/stm32f4/include"
+            ],
+            "defines": [
+                "STM32F446xx"
+            ],
+            "compilerPath": "/opt/MatrixMCU/bin/arm-none-eabi-gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-arm"
+        },
+        {
+            "name": "macos-intel-stm32f446",
+            "includePath": [
+                "${MatrixMCUWorkspaceFolder}/drivers/stm32f4xx/**",
+                "${MatrixMCUWorkspaceFolder}/lib/*/**",
+                "${workspaceFolder}/common/**",
+                "${workspaceFolder}/port/include",
+                "${workspaceFolder}/port/stm32f4/**"
+            ],
+            "defines": [
+                "STM32F446xx"
+            ],
+            "compilerPath": "/opt/local/bin/arm-none-eabi-gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "macos-gcc-arm"
+        },
+        {
+            "name": "macos-silicon-stm32f446",
+            "includePath": [
+                "${MatrixMCUWorkspaceFolder}/drivers/stm32f4xx/**",
+                "${MatrixMCUWorkspaceFolder}/lib/*/**",
+                "${workspaceFolder}/common/**",
+                "${workspaceFolder}/port/include",
+                "${workspaceFolder}/port/stm32f4/**"
+            ],
+            "defines": [
+                "STM32F446xx"
+            ],
+            "compilerPath": "/opt/homebrew/bin/arm-none-eabi-gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "macos-gcc-arm"
+        }
+    ],
+    "version": 4
+}
