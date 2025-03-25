@@ -76,7 +76,7 @@ void stm32f4_button_set_new_gpio(uint32_t button_id, GPIO_TypeDef *p_port, uint8
     p_button->pin = pin;
 }
 
-
+//Presiona el botón
 bool port_button_get_pressed(uint32_t button_id){
     stm32f4_button_hw_t *p_button = _stm32f4_button_get(button_id);
     return p_button->flag_pressed;
