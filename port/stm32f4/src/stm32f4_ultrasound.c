@@ -1,8 +1,8 @@
 /**
  * @file stm32f4_ultrasound.c
  * @brief Portable functions to interact with the ultrasound FSM library. All portable functions must be implemented in this file.
- * @author alumno1
- * @author alumno2
+ * @author Marcos Perez
+ * @author Jorge Lopez-Galvez
  * @date date
  */
 
@@ -19,22 +19,25 @@
 /* Typedefs --------------------------------------------------------------------*/
 typedef struct
 {
-    GPIO_TypeDef *p_trigger_port;
-    GPIO_TypeDef *p_echo_port;
-    uint8_t trigger_pin;
-    uint8_t echo_pin;
-    uint8_t echo_alt_fun;
-    bool trigger_ready;
-    bool trigger_end;
-    bool echo_received;
-    uint32_t echo_init_tick;
-    uint32_t echo_end_tick;
-    uint32_t echo_overflows;
+    GPIO_TypeDef *p_trigger_port; /*!<GPIO where the trigger signal is connected*/
+    GPIO_TypeDef *p_echo_port; /*!<GPIO where the echo signal is connected*/
+    uint8_t trigger_pin; /*!<Pin where the trigger signal is connected*/
+    uint8_t echo_pin; /*!<Pin where the echo signal is connected*/
+    uint8_t echo_alt_fun; /*!<Alternate function of the echo signal*/
+    bool trigger_ready; /*!<Flag to indicate if the trigger signal is ready to start a new measurement*/
+    bool trigger_end; /*!<Flag to indicate if the trigger signal has ended*/
+    bool echo_received; /*!<Flag to indicate if the echo signal has been received*/
+    uint32_t echo_init_tick; /*!<Initial tick of the echo signal*/
+    uint32_t echo_end_tick;    /*!<End tick of the echo signal*/
+    uint32_t echo_overflows; /*!<Number of overflows of the echo signal*/
 } stm32f4_ultrasound_hw_t;
 
 /* Global variables */
-
-
+ 
+/**
+ * @brief Array of elements that represents the HW characteristics of the ultrasounds connected to the STM32F4 platform.
+ * 
+ */
 stm32f4_ultrasound_hw_t ultrasounds_arr[] = {
     [PORT_REAR_PARKING_SENSOR_ID] = {
         .p_trigger_port = STM32F4_REAR_PARKING_SENSOR_TRIGGER_GPIO, 
@@ -52,10 +55,17 @@ stm32f4_ultrasound_hw_t ultrasounds_arr[] = {
 
 /* Private functions ----------------------------------------------------------*/
 
+/**
+*@brief Configures the timer of the trigger signal
+*/
 static void _timer_trigger_setup(){
+    // Enable the timer clock
     RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
+    // Disable the timer
     TIM3->CR1 &= ~TIM_CR1_CEN;
+    // Enable the auto-reload preload
     TIM3->CR1 |= TIM_CR1_ARPE;
+    // Reset the counter
     TIM3->CNT = 0;
     //PS and ARR
     double system_core_clock = (double)SystemCoreClock;
@@ -70,40 +80,66 @@ static void _timer_trigger_setup(){
     }
     TIM3->PSC = (uint32_t)psc;
     TIM3->ARR = (uint32_t)arr;
+    // Generate an update event to update the prescaler value
     TIM3->EGR |= TIM_EGR_UG;
+    // Clear the update interrupt flag
     TIM3->SR &= ~TIM_SR_UIF;
+    // Enable the update interrupt
     TIM3->DIER |= TIM_DIER_UIE;
-    NVIC_EnableIRQ(TIM3_IRQn);
+    // Set the priority of the timer interrupt
     NVIC_SetPriority(TIM3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 4, 0));
 }
 
+/**
+ * @brief Configures the timer of the echo signal.
+ * 
+ * @param ultrasound_id 
+ */
 static void _timer_echo_setup(uint32_t ultrasound_id) {
     if (ultrasound_id == PORT_REAR_PARKING_SENSOR_ID) {
+        // Enable the timer clock
         RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
+        // Disable the timer
         TIM2 -> CR1 &= ~ TIM_CR1_CEN ;
+        // Set the ARR and PSC values
         double arr = TIMER_MAX_ARR;
         double psc = 15;
         TIM2->PSC = (uint32_t)psc;
         TIM2->ARR = (uint32_t)arr;
+        // Enable the auto-reload preload
         TIM2->CR1 &= TIM_CR1_ARPE;
+        // Generate an update event to update the prescaler value
         TIM2->EGR |= TIM_EGR_UG;
+        // Clear the update interrupt flag
         TIM2->CCMR1 &= ~TIM_CCMR1_CC2S;
+        // Configure the input capture mode
         TIM2->CCMR1 |= (0x1 << TIM_CCMR1_CC2S_Pos);
+        // Configure the input capture prescaler
         TIM2->CCMR1 &= ~TIM_CCMR1_IC2F;
+        // Configure the input capture filter
         TIM2->CCER &= ~(TIM_CCER_CC2P | TIM_CCER_CC2NP);
         TIM2->CCER |= (TIM_CCER_CC2P | TIM_CCER_CC2NP);
+        // Configure the input capture prescaler
         TIM2->CCMR1 &= ~TIM_CCMR1_IC2PSC;
+        //Configure the Capture Compare 2 input
         TIM2->CCER |= TIM_CCER_CC2E;
         TIM2->DIER |= TIM_DIER_CC2IE;
-        TIM2->DIER |= TIM_DIER_UIE;
-        NVIC_EnableIRQ(TIM2_IRQn);
+        // Enable the update interrupt
+        TIM2->DIER |= TIM_DIER_UIE;  
+        // Set the priority of the timer interrupt
         NVIC_SetPriority(TIM2_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 3, 0));
 }
 }
 
+/**
+ * @brief Configures the timer used for the measurements.
+ */
 void _timer_new_measurement_setup(){
+    // Enable the timer clock
     RCC->APB1ENR |= RCC_APB1ENR_TIM5EN;
+    // Disable the timer
     TIM5->CR1 &= ~TIM_CR1_CEN;
+    // Enable the auto-reload preload
     TIM5->CR1 |= TIM_CR1_ARPE;
     //PS and ARR
     double system_core_clock = (double)SystemCoreClock;
@@ -118,13 +154,22 @@ void _timer_new_measurement_setup(){
     }
     TIM5->PSC = (uint32_t)psc;
     TIM5->ARR = (uint32_t)arr;
+    // Generate an update event to update the prescaler value
     TIM5->EGR |= TIM_EGR_UG;
+    // Clear the update interrupt flag
     TIM5->SR &= ~TIM_SR_UIF;
+    // Enable the update interrupt
     TIM5->DIER |= TIM_DIER_UIE;
-    NVIC_EnableIRQ(TIM5_IRQn);
+    // Set the priority of the timer interrupt
     NVIC_SetPriority(TIM5_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 5, 0));
 }	
 
+/**
+ * @brief Returns the pointer to the ultrasound sensor with the given ID.
+ * 
+ * @param ultrasound_id 
+ * @return stm32f4_ultrasound_hw_t* 
+ */
 stm32f4_ultrasound_hw_t *_stm32f4_ultrasound_get(uint32_t ultrasound_id)	
 {
         // Return the pointer to the button with the given ID. If the ID is not valid, return NULL.
@@ -145,7 +190,6 @@ void port_ultrasound_init(uint32_t ultrasound_id)
     /* Get the ultrasound sensor */
     stm32f4_ultrasound_hw_t *p_ultrasound = _stm32f4_ultrasound_get(ultrasound_id);
 
-    /* TO-DO alumnos: */
     /* Trigger pin configuration */
     stm32f4_system_gpio_config(p_ultrasound->p_trigger_port, p_ultrasound->trigger_pin, STM32F4_GPIO_MODE_OUT, STM32F4_GPIO_PUPDR_NOPULL);
     /* Echo pin configuration */
@@ -155,6 +199,7 @@ void port_ultrasound_init(uint32_t ultrasound_id)
     _timer_trigger_setup();
     _timer_echo_setup(ultrasound_id);
     _timer_new_measurement_setup();
+    /* Initialize the ultrasound sensor */
     p_ultrasound->echo_init_tick = 0;
     p_ultrasound->echo_end_tick = 0;
     p_ultrasound->echo_overflows = 0;
@@ -165,49 +210,104 @@ void port_ultrasound_init(uint32_t ultrasound_id)
 
 // Getters and setters functions
 
+/**
+ * @brief Stops the trigger timer.
+ * 
+ * @param ultrasound_id 
+ */
 void port_ultrasound_stop_trigger_timer(uint32_t ultrasound_id){
     stm32f4_system_gpio_write(ultrasounds_arr[ultrasound_id].p_trigger_port, ultrasounds_arr[ultrasound_id].trigger_pin, 0);
     TIM3->CR1 &= ~TIM_CR1_CEN;
 }
 
+/**
+ * @brief Returns the value of the trigger end flag.
+ * 
+ * @param ultrasound_id 
+ * @return true 
+ * @return false 
+ */
 bool port_ultrasound_get_trigger_end(uint32_t ultrasound_id){
     return _stm32f4_ultrasound_get(ultrasound_id)->trigger_end;
 }
 
+/**
+ * @brief Returns the value of the trigger ready flag.
+ * 
+ * @param ultrasound_id 
+ * @return true 
+ * @return false 
+ */
 bool port_ultrasound_get_trigger_ready(uint32_t ultrasound_id){
     return _stm32f4_ultrasound_get(ultrasound_id)->trigger_ready;
 }
 
+/**
+ * @brief Sets the value of the trigger end flag.
+ * 
+ * @param ultrasound_id 
+ * @param trigger_end 
+ */
 void port_ultrasound_set_trigger_end(uint32_t ultrasound_id, bool trigger_end){
     _stm32f4_ultrasound_get(ultrasound_id)->trigger_end = trigger_end;
 }
 
-
+/**
+ * @brief Sets the value of the trigger ready flag.
+ * 
+ * @param ultrasound_id 
+ * @param trigger_ready 
+ */
 void port_ultrasound_set_trigger_ready(uint32_t ultrasound_id, bool trigger_ready){
     _stm32f4_ultrasound_get(ultrasound_id)->trigger_ready = trigger_ready;
 }
 
-
+/**
+ * @brief Returns the echo end tick.
+ * 
+ * @param ultrasound_id 
+ * @return uint32_t 
+ */
 uint32_t port_ultrasound_get_echo_end_tick	(uint32_t ultrasound_id){
     return _stm32f4_ultrasound_get(ultrasound_id)->echo_end_tick;
 }  
 
-
+/**
+ * @brief Returns the echo init tick.
+ * 
+ * @param ultrasound_id 
+ * @return uint32_t 
+ */
 uint32_t port_ultrasound_get_echo_init_tick(uint32_t ultrasound_id){
     return _stm32f4_ultrasound_get(ultrasound_id)->echo_init_tick;
 }
 
-
+/**
+ * @brief Returns the number of echo overflows.
+ * 
+ * @param ultrasound_id 
+ * @return uint32_t 
+ */
 uint32_t port_ultrasound_get_echo_overflows(uint32_t ultrasound_id){
     return _stm32f4_ultrasound_get(ultrasound_id)->echo_overflows;
 }
 
-
+/**
+ * @brief Returns the value of the echo received flag.
+ * 
+ * @param ultrasound_id 
+ * @return true 
+ * @return false 
+ */
 bool port_ultrasound_get_echo_received(uint32_t ultrasound_id)	{
     return _stm32f4_ultrasound_get(ultrasound_id)->echo_received;
 }
 
-
+/**
+ * @brief Resets the echo ticks.
+ * 
+ * @param ultrasound_id 
+ */
 void port_ultrasound_reset_echo_ticks(uint32_t 	ultrasound_id){
     _stm32f4_ultrasound_get(ultrasound_id)->echo_init_tick = 0;
     _stm32f4_ultrasound_get(ultrasound_id)->echo_end_tick = 0;
@@ -215,25 +315,51 @@ void port_ultrasound_reset_echo_ticks(uint32_t 	ultrasound_id){
     _stm32f4_ultrasound_get(ultrasound_id)->echo_received = false;
 }
 
-
+/**
+ * @brief Sets the echo end tick.
+ * 
+ * @param ultrasound_id 
+ * @param echo_end_tick 
+ */
 void port_ultrasound_set_echo_end_tick(uint32_t ultrasound_id, uint32_t echo_end_tick ){
     _stm32f4_ultrasound_get(ultrasound_id)->echo_end_tick = echo_end_tick;
 }
 
-
+/**
+ * @brief Sets the echo init tick.
+ * 
+ * @param ultrasound_id 
+ * @param echo_init_tick 
+ */
 void port_ultrasound_set_echo_init_tick(uint32_t ultrasound_id, uint32_t echo_init_tick){
     _stm32f4_ultrasound_get(ultrasound_id)->echo_init_tick = echo_init_tick;
 }
 
+/**
+ * @brief Sets the echo overflows.
+ * 
+ * @param ultrasound_id 
+ * @param echo_overflows 
+ */
 void port_ultrasound_set_echo_overflows(uint32_t ultrasound_id, uint32_t echo_overflows){
     _stm32f4_ultrasound_get(ultrasound_id)->echo_overflows = echo_overflows;
 }	
 
+/**
+ * @brief Sets the echo received flag.
+ * 
+ * @param ultrasound_id 
+ * @param echo_received 
+ */
 void port_ultrasound_set_echo_received(uint32_t ultrasound_id, bool echo_received){
     _stm32f4_ultrasound_get(ultrasound_id)->echo_received = echo_received;
 }	
 
-
+/**
+ * @brief Starts a measurement.
+ * 
+ * @param ultrasound_id 
+ */
 void port_ultrasound_start_measurement(uint32_t ultrasound_id){
     /* Get the ultrasound sensor */
     stm32f4_ultrasound_hw_t *p_ultrasound = _stm32f4_ultrasound_get(ultrasound_id);
@@ -248,7 +374,6 @@ void port_ultrasound_start_measurement(uint32_t ultrasound_id){
     TIM5->CNT = 0; // New measurement timer
 
     /* Set the trigger pin to high */
-    // p_ultrasound->p_trigger_port->BSRR = (1U << p_ultrasound->trigger_pin);
     stm32f4_system_gpio_write(p_ultrasound->p_trigger_port, p_ultrasound->trigger_pin, 1);
     /* Enable the timers interrupts in the NVIC */
     NVIC_EnableIRQ(TIM3_IRQn); // Trigger timer interrupt
@@ -267,7 +392,10 @@ void port_ultrasound_start_measurement(uint32_t ultrasound_id){
     TIM5->CR1 |= TIM_CR1_CEN; // New measurement timer
 }
 
-
+/**
+ * @brief Starts a new measurement timer.
+ * 
+ */
 void port_ultrasound_start_new_measurement_timer(){
         // Enable the interrupt of the new measurement timer in the NVIC
         NVIC_EnableIRQ(TIM5_IRQn);
@@ -275,19 +403,30 @@ void port_ultrasound_start_new_measurement_timer(){
         TIM5->CR1 |= TIM_CR1_CEN;
 }
 
-
+/**
+ * @brief Stops the echo timer.
+ * 
+ * @param ultrasound_id 
+ */
 void port_ultrasound_stop_echo_timer(uint32_t ultrasound_id){
     if(ultrasound_id==PORT_REAR_PARKING_SENSOR_ID){
         TIM2->CR1 &= ~TIM_CR1_CEN;
     }
 }
 
-
+/**
+ * @brief Stops the new measurement timer.
+ * 
+ */
 void port_ultrasound_stop_new_measurement_timer(void){
     TIM5->CR1 &= ~TIM_CR1_CEN;
 }
 
-
+/**
+ * @brief Stops the ultrasound.
+ * 
+ * @param ultrasound_id 
+ */
 void port_ultrasound_stop_ultrasound(uint32_t ultrasound_id){
         // Stop the trigger timer
         port_ultrasound_stop_trigger_timer(ultrasound_id);

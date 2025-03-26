@@ -1,9 +1,9 @@
 /**
  * @file fsm_button.h
  * @brief Header for fsm_button.c file.
- * @author alumno1
- * @author alumno2
- * @date fecha
+ * @author Marcos Perez
+ * @author Jorge Lopez-Galvez
+ * @date 28/03/2025
  */
 
 #ifndef FSM_BUTTON_H_

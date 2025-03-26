@@ -1,8 +1,8 @@
 /**
  * @file stm32f4_ultrasound.h
  * @brief Header for stm32f4_ultrasound.c file.
- * @author alumno1
- * @author alumno2
+ * @author Marcos Perez
+ * @author Jorge Lopez-Galvez
  * @date date
  */
 #ifndef STM32F4_ULTRASOUND_H_
@@ -18,10 +18,10 @@
 
 /* Defines and enums ----------------------------------------------------------*/
 /* Defines */
-#define STM32F4_REAR_PARKING_SENSOR_TRIGGER_GPIO GPIOB
-#define STM32F4_REAR_PARKING_SENSOR_TRIGGER_PIN 0
-#define STM32F4_REAR_PARKING_SENSOR_ECHO_GPIO GPIOA
-#define STM32F4_REAR_PARKING_SENSOR_ECHO_PIN 1
+#define STM32F4_REAR_PARKING_SENSOR_TRIGGER_GPIO GPIOB /*!< GPIO port for the trigger signal of the rear parking sensor.*/
+#define STM32F4_REAR_PARKING_SENSOR_TRIGGER_PIN 0 /*!< GPIO pin for the trigger signal of the rear parking sensor.*/
+#define STM32F4_REAR_PARKING_SENSOR_ECHO_GPIO GPIOA /*!< GPIO port for the echo signal of the rear parking sensor.*/
+#define STM32F4_REAR_PARKING_SENSOR_ECHO_PIN 1 /*!< GPIO pin for the echo signal of the rear parking sensor.*/
 /* Function prototypes and explanation -------------------------------------------------*/
 /**
  * @brief Auxiliary function to change the GPIO and pin of the trigger pin of an ultrasound transceiver. This function is used for testing purposes mainly although it can be used in the final implementation if needed.

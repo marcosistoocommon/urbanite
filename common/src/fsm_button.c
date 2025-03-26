@@ -1,9 +1,9 @@
 /**
  * @file fsm_button.c
  * @brief Button FSM main file.
- * @author alumno1
- * @author alumno2
- * @date fecha
+ * @author Marcos Perez
+ * @author Jorge Lopez-Galvez
+ * @date 28/03/2025
  */
 
 /* Includes ------------------------------------------------------------------*/

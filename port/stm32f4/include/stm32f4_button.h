@@ -1,9 +1,9 @@
 /**
  * @file stm32f4_button.h
  * @brief Header for stm32f4_button.c file.
- * @author alumno1
- * @author alumno2
- * @date fecha
+ * @author Marcos Perez
+ * @author Jorge Lopez-Galvez
+ * @date 28/03/2025
  */
 #ifndef STM32F4_BUTTON_H_
 #define STM32F4_BUTTON_H_
@@ -16,8 +16,8 @@
 
 /* Defines and enums ----------------------------------------------------------*/
 /* Defines */
-#define STM32F4_PARKING_BUTTON_GPIO GPIOC
-#define STM32F4_PARKING_BUTTON_PIN 13
+#define STM32F4_PARKING_BUTTON_GPIO GPIOC /*!< GPIO port for the parking button.*/
+#define STM32F4_PARKING_BUTTON_PIN 13 /*!< GPIO pin for the parking button.*/
 
 
 

@@ -165,10 +165,38 @@ void stm32f4_system_gpio_exti_enable(uint8_t pin, uint8_t priority, uint8_t subp
  */
 void stm32f4_system_gpio_exti_disable(uint8_t pin);
 
+
+/**
+ * @brief Read the value of a GPIO pin
+ *
+ * @param p_port Port of the GPIO (CMSIS struct like)
+ * @param pin Pin/line of the GPIO (index from 0 to 15)
+ *
+ * @retval Value of the pin (0 or 1)
+ */
 bool stm32f4_system_gpio_read (GPIO_TypeDef *p_port, uint8_t pin);
 
+
+/**
+ * @brief Toggle the value of a GPIO pin
+ *
+ * @param p_port Port of the GPIO (CMSIS struct like)
+ * @param pin Pin/line of the GPIO (index from 0 to 15)
+ *
+ * @retval None
+ */
 void stm32f4_system_gpio_toggle (GPIO_TypeDef *p_port, uint8_t pin);
 
+
+/**
+ * @brief Write a value to a GPIO pin
+ *
+ * @param p_port Port of the GPIO (CMSIS struct like)
+ * @param pin Pin/line of the GPIO (index from 0 to 15)
+ * @param value Value to write (0 or 1)
+ *
+ * @retval None
+ */
 void stm32f4_system_gpio_write (GPIO_TypeDef *p_port, uint8_t pin, bool value);
 
 #endif /* STM32F4_SYSTEM_H_ */

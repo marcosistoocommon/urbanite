@@ -34,6 +34,10 @@ void SysTick_Handler(void)
     port_system_set_millis(temp + 1);
 }
 
+/**
+ * @brief Handler of the button interruption
+ * 
+ */
 void EXTI15_10_IRQHandler (void)
 {
     /* ISR parking button */
@@ -49,35 +53,52 @@ void EXTI15_10_IRQHandler (void)
     }
 }
 
-
+/**
+ * @brief Handler of the trigger timer interruption
+ * 
+ */
 void TIM3_IRQHandler(void){
+    // Clear the interrupt flag UIF in the status register SR
     TIM3->SR &= ~TIM_SR_UIF;
+    // Call the function to set the flag that indicates that the trigger signal has ended
     port_ultrasound_set_trigger_end(PORT_REAR_PARKING_SENSOR_ID, true);
 }
 
+/**
+ * @brief Handler of the echo timer interruption
+ * 
+ */
 void TIM2_IRQHandler(void){
     uint32_t current_tick;
     uint32_t ultrasound_id = 0;
-
+    // If it is an UIF interrupt
     if (TIM2->SR & TIM_SR_UIF) {
         uint32_t overflows = port_ultrasound_get_echo_overflows(ultrasound_id);
+        //Increase the overflows counter
         port_ultrasound_set_echo_overflows(ultrasound_id, overflows + 1);
         TIM2->SR &= ~TIM_SR_UIF;
     }
+    // If it is a CC2IF interrupt
     if (TIM2->SR & TIM_SR_CC2IF) {
         current_tick = TIM2->CCR2;
         uint32_t echo_init_tick = port_ultrasound_get_echo_init_tick(ultrasound_id);
         uint32_t echo_end_tick = port_ultrasound_get_echo_end_tick(ultrasound_id);
+        // If the echo signal has not been received yet
         if (echo_init_tick == 0 && echo_end_tick == 0) {
             port_ultrasound_set_echo_init_tick(ultrasound_id, current_tick);
         } else {
             port_ultrasound_set_echo_end_tick(ultrasound_id, current_tick);
             port_ultrasound_set_echo_received(ultrasound_id, true);
         }
+        // Clear the interrupt flag CC2IF in the status register SR
         TIM2->SR &= ~TIM_SR_CC2IF;
     }
 }
 
+/**
+ * @brief Handler of the new measurement timer interruption
+ * 
+ */
 void TIM5_IRQHandler(void)
 {
     // Clear the interrupt flag UIF in the status register SR
