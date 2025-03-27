@@ -26,28 +26,28 @@
 /**
  * @brief Initializes the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to initialize.
+ * @param ultrasound_id 
  */                                                 
 void port_ultrasound_init (uint32_t ultrasound_id);
 
 /**
  * @brief Starts the trigger signal of the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to start the trigger signal.
+ * @param ultrasound_id 
  */
 void port_ultrasound_start_measurement (uint32_t ultrasound_id);
 
 /**
  * @brief Stops the trigger signal of the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to stop the trigger signal.
+ * @param ultrasound_id 
  */
 void port_ultrasound_stop_trigger_timer (uint32_t ultrasound_id);
 
 /**
  * @brief Starts the echo signal of the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to start the echo signal.
+ * @param ultrasound_id 
  */
 void port_ultrasound_stop_echo_timer (uint32_t ultrasound_id);
 
@@ -74,7 +74,7 @@ void port_ultrasound_stop_ultrasound (uint32_t ultrasound_id);
 /**
  * @brief Returns the value of the field trigger ready from the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to get the value of trigger ready.
+ * @param ultrasound_id 
  *
  * @retval Value of trigger ready.
  */
@@ -83,15 +83,15 @@ bool port_ultrasound_get_trigger_ready (uint32_t ultrasound_id);
 /**
  * @brief Sets the value of the field trigger ready from the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to set the value of trigger ready.
- * @param trigger_ready Value to set.
+ * @param ultrasound_id 
+ * @param trigger_ready 
  */
 void port_ultrasound_set_trigger_ready (uint32_t ultrasound_id, bool trigger_ready);
 
 /**
  * @brief Returns the value of the field trigger end from the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to get the value of trigger end.
+ * @param ultrasound_id 
  *
  * @retval Value of trigger end.
  */
@@ -100,15 +100,15 @@ bool port_ultrasound_get_trigger_end (uint32_t ultrasound_id);
 /**
  * @brief Sets the value of the field trigger end from the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to set the value of trigger end.
- * @param trigger_end Value to set.
+ * @param ultrasound_id 
+ * @param trigger_end 
  */
 void port_ultrasound_set_trigger_end (uint32_t ultrasound_id, bool trigger_end);
 
 /**
  * @brief Returns the value of the field echo init tick from the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to get the value of echo init tick.
+ * @param ultrasound_id 
  *
  * @retval Value of echo init tick.
  */
@@ -117,15 +117,15 @@ uint32_t port_ultrasound_get_echo_init_tick (uint32_t ultrasound_id);
 /**
  * @brief Sets the value of the field echo init tick from the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to set the value of echo init tick.
- * @param echo_init_tick Value to set.
+ * @param ultrasound_id 
+ * @param echo_init_tick
  */
 void port_ultrasound_set_echo_init_tick (uint32_t ultrasound_id, uint32_t echo_init_tick);
 
 /**
  * @brief Returns the value of the field echo end tick from the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to get the value of echo end tick.
+ * @param ultrasound_id 
  *
  * @retval Value of echo end tick.
  */
@@ -134,15 +134,15 @@ uint32_t port_ultrasound_get_echo_end_tick (uint32_t ultrasound_id);
 /**
  * @brief Sets the value of the field echo end tick from the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to set the value of echo end tick.
- * @param echo_end_tick Value to set.
+ * @param ultrasound_id 
+ * @param echo_end_tick
  */
 void port_ultrasound_set_echo_end_tick (uint32_t ultrasound_id, uint32_t echo_end_tick);
 
 /**
  * @brief Returns the value of the field echo received from the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to get the value of echo received.
+ * @param ultrasound_id
  *
  * @retval Value of echo received.
  */
@@ -151,15 +151,15 @@ bool port_ultrasound_get_echo_received (uint32_t ultrasound_id);
 /**
  * @brief Sets the value of the field echo received from the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to set the value of echo received.
- * @param echo_received Value to set.
+ * @param ultrasound_id 
+ * @param echo_received 
  */
 void port_ultrasound_set_echo_received (uint32_t ultrasound_id, bool echo_received);
 
 /**
  * @brief Returns the value of the field echo overflows from the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to get the value of echo overflows.
+ * @param ultrasound_id 
  *
  * @retval Value of echo overflows.
  */
@@ -168,8 +168,8 @@ uint32_t port_ultrasound_get_echo_overflows (uint32_t ultrasound_id);
 /**
  * @brief Sets the value of the field echo overflows from the ultrasound sensor with the specified identifier.
  *
- * @param ultrasound_id Identifier of the ultrasound sensor to set the value of echo overflows.
- * @param echo_overflows Value to set.
+ * @param ultrasound_id 
+ * @param echo_overflows 
  */
 void port_ultrasound_set_echo_overflows (uint32_t ultrasound_id, uint32_t echo_overflows);
 

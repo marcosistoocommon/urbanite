@@ -18,7 +18,11 @@
 /* Defines and enums ----------------------------------------------------------*/
 #define FSM_ULTRASOUND_NUM_MEASUREMENTS  5 /*!< Number of measurements to average */
 
-enum  	FSM_ULTRASOUND { /*!< States of the ultrasound FSM */
+/**
+ * @brief States of the ultrasound FSM.
+ * 
+ */
+enum  	FSM_ULTRASOUND { 
     WAIT_START = 0,
     TRIGGER_START,
     WAIT_ECHO_START,
@@ -26,6 +30,10 @@ enum  	FSM_ULTRASOUND { /*!< States of the ultrasound FSM */
     SET_DISTANCE
   };
 /* Typedefs --------------------------------------------------------------------*/
+/**
+ * @brief Structure of the Ultrasound FSM.
+ * 
+ */
 typedef struct fsm_ultrasound_t fsm_ultrasound_t;
 /* Function prototypes and explanation -------------------------------------------------*/
 

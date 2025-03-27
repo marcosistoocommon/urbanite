@@ -17,6 +17,10 @@
 #include "stm32f4_ultrasound.h"
 
 /* Typedefs --------------------------------------------------------------------*/
+/**
+ * @brief Structure that represents the HW characteristics of the ultrasound sensors connected to the STM32F4 platform.
+ * 
+ */
 typedef struct
 {
     GPIO_TypeDef *p_trigger_port; /*!<GPIO where the trigger signal is connected*/

@@ -37,7 +37,13 @@ struct fsm_ultrasound_t
 /* Typedefs --------------------------------------------------------------------*/
 
 /* Private functions -----------------------------------------------------------*/
-// Comparison function for qsort
+/**
+ * @brief Comparison function for qsort.
+ * 
+ * @param a 
+ * @param b 
+ * @return int 
+ */
 int _compare(const void *a, const void *b)
 {
     return (*(uint32_t *)a - *(uint32_t *)b);
@@ -197,6 +203,10 @@ static void do_stop_measurement (fsm_t *p_this){
 
 
 /* State machine definition ----------------------------------------------------*/
+/**
+ * @brief Ultrasound sensor FSM transitions.
+ * 
+ */
 static fsm_trans_t 	fsm_trans_ultrasound []= {
     {WAIT_START, check_on, TRIGGER_START, do_start_measurement},
     {TRIGGER_START, check_trigger_end, WAIT_ECHO_START, do_stop_trigger},
