@@ -3,7 +3,7 @@
  * @brief Header for stm32f4_ultrasound.c file.
  * @author Marcos Perez
  * @author Jorge Lopez-Galvez
- * @date date
+ * @date 28/03/2025
  */
 #ifndef STM32F4_ULTRASOUND_H_
 #define STM32F4_ULTRASOUND_H_
