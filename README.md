@@ -78,7 +78,7 @@ Las funciones relacionadas con el hardware del transceptor que hemos programado 
 
 *stm32f4_ultrasound.c*
 * _timer_trigger_setup() 
-* timer_echo_setup() 
+* _timer_echo_setup() 
 * _timer_new_measurement_setup()
 * _stm32f4_ultrasound_get() 
 * port_ultrasound_init() 
