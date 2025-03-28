@@ -1,93 +1,154 @@
-# Título del proyecto
+# UltRasonic-Based pArkiNg aId sysTEm
 
 ## Authors
 
-* **Alumno 1** - email: [alumno@alumno.es](mailto:alumno@alumno.es)
-* **Alumno 2** - email: [alumno@alumno.es](mailto:alumno@alumno.es)
+* **Jorge Lopez-Galvez** - email: [jorge.lopez-galvez@alumnos.upm.es](mailto:jorge.lopez-galvez@alumnos.upm.es)
+* **Marcos Perez** - email: [marcos.perez@alumnos.upm.es](mailto:marcos.perez@alumnos.upm.es)
 
-Ponga una breve descripción del proyecto **aquí** en castellano e inglés.
+El proyecto consiste en un sistema de ayuda al aparcamiento mediante un transceptor de ultrasonidos y un LED. Con el transceptor de ultrasonidos se medirá la distancia a los obstáculos, y el LED cambiará de color en función de la distancia medida. Por el momento hemos desarrollado el botón de encendido (no la gestión de consumo, correspondiente a la V4), y el medidor de distancia mediante el transceptor de ultrasonidos.
 
-Puede añadir una imagen de portada **de su propiedad** aquí. Por ejemplo, del montaje final, o una captura de osciloscopio, etc.
-
-**Las imágenes se deben guardar en la carpeta `docs/assets/imgs/` y se pueden incluir en el documento de la siguiente manera:**
-
-```markdown
-![Texto alternativo](docs/assets/imgs/imagen.png)
-```
-
-NOTA: **NO** añada el código ```markdown``` en el fichero `README.md` de su proyecto, sino lo de dentro. Este código es un para mostrar de forma literal cómo se puede añadir una imagen al fichero `README.md`.
-
-**Añada un enlace a un vídeo público de su propiedad aquí con la demostración del proyecto explicando lo que haya hecho en la versión V5.**
-
-Para añadir un enlace a un vídeo de Youtube, puede usar el siguiente código:
-
-```markdown
-[![Texto alternativo](docs/assets/imgs/imagen.png)](https://youtu.be/ID_DEL_VIDEO "Texto al pasar el ratón por encima de la imagen.")
-```
-
-NOTA: **NO** añada el código ```markdown``` sino lo de dentro. Este código es un para mostrar de forma literal cómo se puede añadir un enlace a un vídeo de Youtube al fichero `README.md`.
+The project consists of a parking assistance system using an ultrasonic transceiver and an LED. The ultrasonic transceiver will measure the distance to obstacles, and the LED will change color depending on the measured distance. At the moment we have developed the power button (not the consumption management, corresponding to V4), and the distance meter using the ultrasonic transceiver.
 
 ## Version 1
+En esta versión desarrollamos el funcionamiento del botón que usaremos en la V4 para la gestión de consumo, además de programar unas funciones generales que nos serán útiles para el resto del proyecto.
 
-Breve descripción de la versión 1.
+**Funciones generales**
 
-* Para poner un texto en negrita se usa el símbolo `**` de manera consecutiva. Por ejemplo: **Texto en negrita**
-* Para poner un texto en cursiva se usa el símbolo `*` de manera consecutiva. Por ejemplo: *Texto en cursiva*
-* Para poner un texto en cursiva y negrita se usa el símbolo `***` de manera consecutiva. Por ejemplo: ***Texto en cursiva y negrita***
+Las funciones que hemos programado antes de empezar con el botón son:
 
-Para añadir subsecciones se usa el símbolo `#` de manera consecutiva. Por ejemplo:
+*Temporización*
+* port_system_delay_ms()
+* port_system_delay_until_ms()
+* port_system_get_millis()
+* port_system_set_millis()
+* SysTick_Handler()
 
-### Subsección 1
+*Gestion de GPIOs*
+* stm32f4_system_gpio_read()
+* stm32f4_system_gpio_write()
+* stm32f4_system_gpio_toggle()
 
-Breve descripción de la subsección 1.
 
-Para añadir una lista de elementos se usa el símbolo `-` de manera consecutiva. Por ejemplo:
+**Hardware**
 
-* Elemento 1
-* Elemento 2
-* Elemento 3
+Las funciones relacionadas con el hardware del botón que hemos programado son:
 
-Para añadir una lista de elementos numerados se usa el símbolo `1.` de manera consecutiva. Por ejemplo:
+*stm32f4_button.c*
+* _stm32f4_button_get()
+* port_button_init()
+* stm32f4_button_set_new_gpio()
+* port_button_get_pressed()
+* port_button_get_value()
+* port_button_set_pressed()
+* port_button_get_pending_interrupt()
+* port_button_clear_pending_interrupt()
+* port_button_disable_interrupts()
 
-1. Elemento 1
-2. Elemento 2
-3. Elemento 3
+*interr.c*
+* EXTI15_10_IRQHandler()
 
-Para añadir un enlace a una página web se usa el siguiente código:
+**FSM**
 
-```markdown
-Enlace a [Google](https://www.google.com).
-```
+Las funciones relacionadas con la FSM del botón que hemos programado son:
 
-NOTA: **NO** añada el código ```markdown``` sino lo de dentro. Este código es un para mostrar de forma literal cómo se puede añadir un enlace a una página web al fichero `README.md`.
+*fsm_button.c*
+* check_button_pressed()
+* check_button_released()
+* check_timeout()
+* do_store_tick_pressed()
+* do_set_duration()
+* fsm_button_init()
+* fsm_button_new()
+* fsm_button_fire()
+* fsm_button_destroy()
+* fsm_button_get_inner_fsm()
+* fsm_button_get_state()
+* fsm_button_get_duration()
+* fsm_button_reset_duration()
+* fsm_button_get_debounce_time_ms()
 
-Puede añadir tablas de la siguiente manera:
-
-| Columna 1 | Columna 2 | Columna 3 |
-| --------- | --------- | --------- |
-| Valor 1   | Valor 2   | Valor 3   |
-| Valor 4   | Valor 5   | Valor 6   |
-
-Para añadir un enlace a un fichero `.c` o `.h` puede usar el siguiente código. Se trata de enlaces a ficheros `.html` que se generan automáticamente con la documentación del código al ejecutar Doxygen y que se encuentran en la carpeta `docs/html/`.
-
-```markdown
-Enlace a la [FSM de Version 1](fsm__button_8c.html).
-```
-
-NOTA: **NO** añada el código ```markdown``` sino lo de dentro. Este código es un para mostrar de forma literal cómo se puede añadir un enlace a un fichero `.c` o `.h` al fichero `README.md`.
 
 ## Version 2
 
-Breve descripción de la versión 2.
+En esta versión desarrollamos el funcionamiento del transceptor de ultrasonidos que usaremos para medir distancias.
+
+**Hardware**
+
+Las funciones relacionadas con el hardware del transceptor que hemos programado son:
+
+*stm32f4_ultrasound.c*
+* _timer_trigger_setup() 
+* timer_echo_setup() 
+* _timer_new_measurement_setup()
+* _stm32f4_ultrasound_get() 
+* port_ultrasound_init() 
+* port_ultrasound_stop_trigger_timer() 
+* port_ultrasound_get_trigger_end() 
+* port_ultrasound_get_trigger_ready() 
+* port_ultrasound_set_trigger_end()
+* port_ultrasound_set_trigger_ready() 
+* port_ultrasound_get_echo_end_tick()
+* port_ultrasound_get_echo_init_tick() 
+* port_ultrasound_get_echo_overflows() 
+* port_ultrasound_get_echo_received() 
+* port_ultrasound_reset_echo_ticks() 
+* port_ultrasound_set_echo_end_tick() 
+* port_ultrasound_set_echo_init_tick() 
+* port_ultrasound_set_echo_overflows() 
+* port_ultrasound_set_echo_received() 
+* port_ultrasound_start_measurement() 
+* port_ultrasound_start_new_measurement_timer() 
+* port_ultrasound_stop_echo_timer()
+* port_ultrasound_stop_new_measurement_timer()
+* port_ultrasound_stop_ultrasound()
+* stm32f4_ultrasound_set_new_trigger_gpio()
+* stm32f4_ultrasound_set_new_echo_gpio()
+
+*interr.c*
+* TIM3_IRQHandler() 
+* TIM2_IRQHandler() 
+* TIM5_IRQHandler()
+
+**Software**
+
+Las funciones relacionadas con la FSM del transceptor que hemos programado son:
+
+*fsm_ultrasound.c*
+* check_on()
+* check_off()
+* check_trigger_end()
+* check_echo_init()
+* check_echo_received()
+* check_new_measurement()
+* do_start_measurement()
+* do_start_new_measurement()
+* do_stop_trigger()
+* do_set_distance()
+* do_stop_measurement()
+* fsm_ultrasound_init()
+* fsm_ultrasound_new()
+* fsm_ultrasound_destroy()
+* fsm_ultrasound_fire()
+* fsm_ultrasound_get_distance()
+* fsm_ultrasound_stop()
+* fsm_ultrasound_start()
+* fsm_ultrasound_get_status()
+* fsm_ultrasound_set_status()
+* fsm_ultrasound_get_ready()
+* fsm_ultrasound_get_new_measurement_ready()
+* fsm_ultrasound_get_inner_fsm()
+* fsm_ultrasound_get_state()
+* fsm_ultrasound_set_state()
+* fsm_ultrasound_check_activity()
 
 ## Version 3
 
-Breve descripción de la versión 3.
+En desarrollo
 
 ## Version 4
 
-Breve descripción de la versión 4.
+En desarrollo
 
 ## Version 5
 
-Breve descripción de la versión 5.
+En desarrollo
