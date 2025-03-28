@@ -97,7 +97,7 @@ static void _timer_trigger_setup(){
 /**
  * @brief Configures the timer of the echo signal.
  * 
- * @param ultrasound_id 
+ * @param ultrasound_id  ID of the ultrasound sensor.
  */
 static void _timer_echo_setup(uint32_t ultrasound_id) {
     if (ultrasound_id == PORT_REAR_PARKING_SENSOR_ID) {
@@ -171,8 +171,8 @@ void _timer_new_measurement_setup(){
 /**
  * @brief Returns the pointer to the ultrasound sensor with the given ID.
  * 
- * @param ultrasound_id 
- * @return stm32f4_ultrasound_hw_t* 
+ * @param ultrasound_id ID of the ultrasound sensor.
+ * @return stm32f4_ultrasound_hw_t* Pointer to the ultrasound sensor.
  */
 stm32f4_ultrasound_hw_t *_stm32f4_ultrasound_get(uint32_t ultrasound_id)	
 {

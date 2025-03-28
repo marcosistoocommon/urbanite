@@ -134,12 +134,6 @@ void fsm_button_init(fsm_button_t *p_fsm_button, uint32_t debounce_time, uint32_
 
 /* Public functions -----------------------------------------------------------*/
 
-/**
- * @brief Creates a new Button FSM instance.
- * @param debounce_time Debounce time in milliseconds.
- * @param button_id ID of the button.
- * @return Pointer to the newly created Button FSM instance.
- */
 
 fsm_button_t *fsm_button_new(uint32_t debounce_time, uint32_t button_id)
 {
@@ -148,76 +142,49 @@ fsm_button_t *fsm_button_new(uint32_t debounce_time, uint32_t button_id)
     return p_fsm_button;                                       /* Composite pattern: return the fsm_t pointer as a fsm_button_t pointer */
 }
 
-/* FSM-interface functions. These functions are used to interact with the FSM */
 
-/**
- * @brief Triggers the FSM to process the next state transition.
- * @param p_fsm Pointer to the Button FSM instance.
- */
 
 void fsm_button_fire(fsm_button_t *p_fsm)
 {
     fsm_fire(&p_fsm->f); // Is it also possible to it in this way: fsm_fire((fsm_t *)p_fsm);
 }
 
-/**
- * @brief Destroys a Button FSM instance.
- * @param p_fsm Pointer to the Button FSM instance to destroy.
- */
+
 
 void fsm_button_destroy(fsm_button_t *p_fsm)
 {
     free(&p_fsm->f);
 }
 
-/**
- * @brief Retrieves the inner FSM structure.
- * @param p_fsm Pointer to the Button FSM instance.
- * @return Pointer to the inner FSM structure.
- */
+
 
 fsm_t *fsm_button_get_inner_fsm(fsm_button_t *p_fsm)
 {
     return &p_fsm->f;
 }
 
-/**
- * @brief Gets the current state of the Button FSM.
- * @param p_fsm Pointer to the Button FSM instance.
- * @return Current state of the Button FSM.
- */
+
 
 uint32_t fsm_button_get_state(fsm_button_t *p_fsm)
 {
     return p_fsm->f.current_state;
 }
 
-/**
- * @brief Gets the duration the button was pressed.
- * @param p_fsm Pointer to the Button FSM instance.
- * @return Duration in milliseconds.
- */
+
 
 uint32_t fsm_button_get_duration(fsm_button_t *p_fsm)
 {
     return p_fsm->duration;
 }
 
-/**
- * @brief Resets the duration of the button press.
- * @param p_fsm Pointer to the Button FSM instance.
- */
+
 
 void fsm_button_reset_duration(fsm_button_t *p_fsm)
 {
     p_fsm->duration = 0;
 }
 
-/**
- * @brief Gets the debounce time of the Button FSM.
- * @param p_fsm Pointer to the Button FSM instance.
- * @return Debounce time in milliseconds.
- */
+
 
 uint32_t fsm_button_get_debounce_time_ms(fsm_button_t *p_fsm)
 {

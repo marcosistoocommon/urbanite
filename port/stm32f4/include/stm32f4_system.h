@@ -85,7 +85,7 @@
  * @param mode Input, output, alternate, or analog
  * @param pupd Pull-up, pull-down, or no-pull
  *
- * @retval None
+ * 
  */
 void stm32f4_system_gpio_config(GPIO_TypeDef *p_port, uint8_t pin, uint8_t mode, uint8_t pupd);
 
@@ -110,7 +110,7 @@ void stm32f4_system_gpio_config(GPIO_TypeDef *p_port, uint8_t pin, uint8_t mode,
  * @param pin Pin/line of the GPIO (index from 0 to 15)
  * @param alternate Alternate function number (values from 0 to 15) according to table of the datasheet: "Table 11. Alternate function".
  *
- * @retval None
+ * 
  */
 void stm32f4_system_gpio_config_alternate(GPIO_TypeDef *p_port, uint8_t pin, uint8_t alternate);
 
@@ -141,7 +141,7 @@ void stm32f4_system_gpio_config_alternate(GPIO_TypeDef *p_port, uint8_t pin, uin
  * @param p_port Port of the GPIO (CMSIS struct like)
  * @param pin Pin/line of the GPIO (index from 0 to 15)
  * @param mode Trigger mode can be a combination (OR) of: (i) direction: rising edge (0x01), falling edge (0x02), (ii)  event request (0x04), or (iii) interrupt request (0x08).
- * @retval None
+ * 
  */
 void stm32f4_system_gpio_config_exti(GPIO_TypeDef *p_port, uint8_t pin, uint32_t mode);
 
@@ -152,7 +152,7 @@ void stm32f4_system_gpio_config_exti(GPIO_TypeDef *p_port, uint8_t pin, uint32_t
  * @param priority Priority level (from highest priority: 0, to lowest priority: 15)
  * @param subpriority Subpriority level (from highest priority: 0, to lowest priority: 15)
  *
- * @retval None
+ * 
  */
 void stm32f4_system_gpio_exti_enable(uint8_t pin, uint8_t priority, uint8_t subpriority);
 
@@ -161,7 +161,7 @@ void stm32f4_system_gpio_exti_enable(uint8_t pin, uint8_t priority, uint8_t subp
  *
  * @param pin Pin/line of the GPIO (index from 0 to 15)
  *
- * @retval None
+ * 
  */
 void stm32f4_system_gpio_exti_disable(uint8_t pin);
 
@@ -183,7 +183,7 @@ bool stm32f4_system_gpio_read (GPIO_TypeDef *p_port, uint8_t pin);
  * @param p_port Port of the GPIO (CMSIS struct like)
  * @param pin Pin/line of the GPIO (index from 0 to 15)
  *
- * @retval None
+ * 
  */
 void stm32f4_system_gpio_toggle (GPIO_TypeDef *p_port, uint8_t pin);
 
@@ -195,7 +195,7 @@ void stm32f4_system_gpio_toggle (GPIO_TypeDef *p_port, uint8_t pin);
  * @param pin Pin/line of the GPIO (index from 0 to 15)
  * @param value Value to write (0 or 1)
  *
- * @retval None
+ * 
  */
 void stm32f4_system_gpio_write (GPIO_TypeDef *p_port, uint8_t pin, bool value);
 

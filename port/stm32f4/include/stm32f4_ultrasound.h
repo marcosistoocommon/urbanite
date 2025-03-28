@@ -26,9 +26,9 @@
 /**
  * @brief Auxiliary function to change the GPIO and pin of the trigger pin of an ultrasound transceiver. This function is used for testing purposes mainly although it can be used in the final implementation if needed.
  *
- * @param ultrasound_id 
- * @param p_port 
- * @param pin 
+ * @param ultrasound_id ID of the ultrasound sensor.
+ * @param p_port GPIO port where the trigger signal is connected.
+ * @param pin Pin where the trigger signal is connected.
  *
  */
 void stm32f4_ultrasound_set_new_trigger_gpio(uint32_t ultrasound_id, GPIO_TypeDef *p_port, uint8_t pin);
@@ -36,9 +36,9 @@ void stm32f4_ultrasound_set_new_trigger_gpio(uint32_t ultrasound_id, GPIO_TypeDe
 /**
  * @brief Auxiliary function to change the GPIO and pin of the echo pin of an ultrasound transceiver. This function is used for testing purposes mainly although it can be used in the final implementation if needed.
  *
- * @param ultrasound_id 
- * @param p_port 
- * @param pin 
+ * @param ultrasound_id ID of the ultrasound sensor.
+ * @param p_port GPIO port where the echo signal is connected.
+ * @param pin Pin where the echo signal is connected.
  *
  */
 void stm32f4_ultrasound_set_new_echo_gpio(uint32_t ultrasound_id, GPIO_TypeDef *p_port, uint8_t pin);

@@ -53,9 +53,9 @@ int _compare(const void *a, const void *b)
 /**
  * @brief Checks if the ultrasound sensor is on.
  * 
- * @param p_this 
- * @return true 
- * @return false 
+ * @param p_this Pointer to the ultrasound FSM.
+ * @return Value of the flag trigger_ready.
+ * 
  */
 static bool check_on (fsm_t *p_this){
     fsm_ultrasound_t *p_fsm_ultrasound = (fsm_ultrasound_t *)p_this;
@@ -65,9 +65,8 @@ static bool check_on (fsm_t *p_this){
 /**
  * @brief Checks if the ultrasound sensor is off.
  * 
- * @param p_this 
- * @return true 
- * @return false 
+ * @param p_this Pointer to the ultrasound FSM.
+ * @return The opposite of the flag status.
  */
 static bool check_off (fsm_t *p_this){
     fsm_ultrasound_t *p_fsm_ultrasound = (fsm_ultrasound_t *)p_this;
@@ -78,9 +77,8 @@ static bool check_off (fsm_t *p_this){
 /**
  * @brief Checks if the trigger signal has ended.
  * 
- * @param p_this 
- * @return true 
- * @return false 
+ * @param p_this Pointer to the ultrasound FSM.
+ * @return Value of the flag trigger_end.
  */
 static bool check_trigger_end (fsm_t *p_this){
     fsm_ultrasound_t *p_fsm_ultrasound = (fsm_ultrasound_t *)p_this;
@@ -92,8 +90,7 @@ static bool check_trigger_end (fsm_t *p_this){
  * @brief Checks if the echo signal has started.
  * 
  * @param p_this 
- * @return true 
- * @return false 
+ * @return True if echo_init_tick is greater than 0.
  */
 static bool check_echo_init (fsm_t *p_this){
     fsm_ultrasound_t *p_fsm_ultrasound = (fsm_ultrasound_t *)p_this;
@@ -104,9 +101,8 @@ static bool check_echo_init (fsm_t *p_this){
 /**
  * @brief Checks if the echo signal has been received.
  * 
- * @param p_this 
- * @return true 
- * @return false 
+ * @param p_this Pointer to the ultrasound FSM.
+ * @return True if echo_received is true and check_echo_init is true. 
  */
 static bool check_echo_received (fsm_t *p_this){
     fsm_ultrasound_t *p_fsm_ultrasound = (fsm_ultrasound_t *)p_this;
@@ -118,9 +114,8 @@ static bool check_echo_received (fsm_t *p_this){
 /**
  * @brief Checks if a new measurement is ready.
  * 
- * @param p_this 
- * @return true 
- * @return false 
+ * @param p_this  Pointer to the ultrasound FSM.
+ * @return Value of the flag trigger_ready
  */
 static bool check_new_measurement (fsm_t *p_this){
     fsm_ultrasound_t *p_fsm_ultrasound = (fsm_ultrasound_t *)p_this;
@@ -133,7 +128,7 @@ static bool check_new_measurement (fsm_t *p_this){
 /**
  * @brief Starts a measurement.
  * 
- * @param p_this 
+ * @param p_this Pointer to the ultrasound FSM.
  */
 static void do_start_measurement (fsm_t *p_this){
     fsm_ultrasound_t *p_fsm_ultrasound = (fsm_ultrasound_t *)p_this;
@@ -144,7 +139,7 @@ static void do_start_measurement (fsm_t *p_this){
 /**
  * @brief Starts a new measurement.
  * 
- * @param p_this 
+ * @param p_this Pointer to the ultrasound FSM.
  */
 static void do_start_new_measurement (fsm_t *p_this){
     do_start_measurement(p_this);
@@ -154,7 +149,7 @@ static void do_start_new_measurement (fsm_t *p_this){
 /**
  * @brief Stops the trigger signal.
  * 
- * @param p_this 
+ * @param p_this Pointer to the ultrasound FSM.
  */
 static void do_stop_trigger (fsm_t *p_this){
     fsm_ultrasound_t *p_fsm_ultrasound = (fsm_ultrasound_t *)p_this;
@@ -166,7 +161,7 @@ static void do_stop_trigger (fsm_t *p_this){
 /**
  * @brief Sets the distance measured by the ultrasound sensor.
  * 
- * @param p_this 
+ * @param p_this Pointer to the ultrasound FSM.
  */
 static void do_set_distance (fsm_t *p_this){
     fsm_ultrasound_t *p_fsm_ultrasound = (fsm_ultrasound_t *)p_this;
@@ -194,7 +189,7 @@ static void do_set_distance (fsm_t *p_this){
 /**
  * @brief Stops a measurement.
  * 
- * @param p_this 
+ * @param p_this Pointer to the ultrasound FSM.
  */
 static void do_stop_measurement (fsm_t *p_this){
     fsm_ultrasound_t *p_fsm_ultrasound = (fsm_ultrasound_t *)p_this;
