@@ -31,12 +31,12 @@ typedef struct {
 static 
 stm32f4_display_hw_t displays_arr[]= {
     [PORT_REAR_PARKING_DISPLAY_ID] ={
-        STM32F4_REAR_PARKING_DISPLAY_RGB_R_GPIO,
-        STM32F4_REAR_PARKING_DISPLAY_RGB_R_PIN,
-        STM32F4_REAR_PARKING_DISPLAY_RGB_G_GPIO,
-        STM32F4_REAR_PARKING_DISPLAY_RGB_G_PIN,
-        STM32F4_REAR_PARKING_DISPLAY_RGB_B_GPIO,
-        STM32F4_REAR_PARKING_DISPLAY_RGB_B_PIN
+        .p_port_red =  STM32F4_REAR_PARKING_DISPLAY_RGB_R_GPIO,
+        .pin_red =  STM32F4_REAR_PARKING_DISPLAY_RGB_R_PIN,
+        .p_port_green =STM32F4_REAR_PARKING_DISPLAY_RGB_G_GPIO,
+        .pin_green = STM32F4_REAR_PARKING_DISPLAY_RGB_G_PIN,
+        .p_port_blue = STM32F4_REAR_PARKING_DISPLAY_RGB_B_GPIO,
+        .pin_blue =STM32F4_REAR_PARKING_DISPLAY_RGB_B_PIN
     }
 };
 /* Private functions -----------------------------------------------------------*/
@@ -59,9 +59,12 @@ void _timer_pwm_config(uint32_t display_id)
     if(display_id == PORT_REAR_PARKING_DISPLAY_ID)
     {
         RCC->APB1ENR |= RCC_APB1ENR_TIM4EN; 
+
         TIM4->CR1 &= ~TIM_CR1_CEN; 
         TIM4->CR1 |= TIM_CR1_ARPE; 
+
         TIM4->CNT = 0; 
+
         double system_core_clock = (double)SystemCoreClock;
         double max_arr = TIMER_MAX_ARR;
         double time_PWD = (double)1/frec_PWD;
@@ -74,19 +77,27 @@ void _timer_pwm_config(uint32_t display_id)
         }
         TIM4->PSC = (uint32_t)psc;
         TIM4->ARR = (uint32_t)arr;
-        // Revisar (Se hizo con sueño)
+
         TIM4->CCER &= ~TIM_CCER_CC1E;
         TIM4->CCER &= ~TIM_CCER_CC3E;
         TIM4->CCER &= ~TIM_CCER_CC4E;
-        TIM4->CCER &= ~(TIM_CCER_CC1P | TIM_CCER_CC1NP);
-        TIM4->CCER &= ~(TIM_CCER_CC3P | TIM_CCER_CC3NP);
-        TIM4->CCER &= ~(TIM_CCER_CC4P | TIM_CCER_CC4NP);
-        TIM4->CCMR1 |= TIM_CCMR1_OC1M;
-        TIM4->CCMR2 |= TIM_CCMR2_OC3M;
-        TIM4->CCMR2 |= TIM_CCMR2_OC4M;
+
+        TIM4->CCER &= ~TIM_CCER_CC1P;
+        TIM4->CCER &= ~TIM_CCER_CC3P;
+        TIM4->CCER &= ~TIM_CCER_CC4P;
+
+        TIM4->CCER &= ~TIM_CCER_CC1NP;
+        TIM4->CCER &= ~TIM_CCER_CC3NP;
+        TIM4->CCER &= ~TIM_CCER_CC4NP;
+
+        TIM4->CCMR1 |= TIM_CCMR1_OC1M_0;  
+        TIM4->CCMR2 |= TIM_CCMR2_OC3M_0;  
+        TIM4->CCMR2 |= TIM_CCMR2_OC4M_0; 
+
         TIM4->CCMR1 |= TIM_CCMR1_OC1PE;
         TIM4->CCMR2 |= TIM_CCMR2_OC3PE;
         TIM4->CCMR2 |= TIM_CCMR2_OC4PE;
+
         TIM4->EGR |= TIM_EGR_UG;  
     }
 }
@@ -94,12 +105,19 @@ void _timer_pwm_config(uint32_t display_id)
 void port_display_init(uint32_t display_id){
     stm32f4_display_hw_t *p_display = _stm32f4_display_get(display_id);
     stm32f4_system_gpio_config(p_display->p_port_red, p_display->pin_red, STM32F4_GPIO_MODE_AF, STM32F4_GPIO_PUPDR_NOPULL);
+    
     stm32f4_system_gpio_config_alternate(p_display->p_port_red, p_display->pin_red, STM32F4_AF2);
+    
     stm32f4_system_gpio_config(p_display->p_port_green, p_display->pin_green, STM32F4_GPIO_MODE_AF, STM32F4_GPIO_PUPDR_NOPULL);
+    
     stm32f4_system_gpio_config_alternate(p_display->p_port_green, p_display->pin_green, STM32F4_AF2);
+    
     stm32f4_system_gpio_config(p_display->p_port_blue, p_display->pin_blue, STM32F4_GPIO_MODE_AF, STM32F4_GPIO_PUPDR_NOPULL);
+    
     stm32f4_system_gpio_config_alternate(p_display->p_port_blue, p_display->pin_blue, STM32F4_AF2);
+    
     _timer_pwm_config(display_id);
+    
     port_display_set_rgb(display_id, COLOR_OFF);
 }
 
@@ -107,6 +125,7 @@ void port_display_set_rgb(uint32_t display_id, rgb_color_t color){
     uint8_t r = color.r;
     uint8_t g = color.g;
     uint8_t b = color.b;
+    
     if (display_id == PORT_REAR_PARKING_DISPLAY_ID)
     {
         TIM4->CR1 &= ~TIM_CR1_CEN;
@@ -120,7 +139,6 @@ void port_display_set_rgb(uint32_t display_id, rgb_color_t color){
             TIM4->CCER &= ~TIM_CCER_CC1E;
         }
         else{
-            //Revisar (GPTAZO)
             double duty_cycle = (double)r/(double)PORT_DISPLAY_RGB_MAX_VALUE;
             TIM4->CCR1 = (uint32_t)(duty_cycle*(double)TIM4->ARR);
             TIM4->CCER |= TIM_CCER_CC1E;
