@@ -16,18 +16,28 @@
 #include "stm32f4_system.h"
 #include "stm32f4_display.h"
 /* Defines --------------------------------------------------------------------*/
-#define TIMER_MAX_ARR 0xFFFF
-#define frec_PWD 50
+#define TIMER_MAX_ARR 0xFFFF /*!<Maximum value for the timer auto-reload register.*/
+#define frec_PWD 50 /*!< Frequency of the PWM signal.*/
 /* Typedefs --------------------------------------------------------------------*/
+
+/**
+ * @brief Structure representing the hardware configuration for an RGB display.
+ */
+
 typedef struct {
-    GPIO_TypeDef *p_port_red;
-    uint8_t pin_red;
-    GPIO_TypeDef *p_port_green;
-    uint8_t pin_green;
-    GPIO_TypeDef * p_port_blue;
-    uint8_t 	pin_blue;
+    GPIO_TypeDef *p_port_red; /*!< GPIO port for the red component.*/
+    uint8_t pin_red; /*!< GPIO pin for the red component.*/
+    GPIO_TypeDef *p_port_green; /*!< GPIO port for the green component.*/
+    uint8_t pin_green; /*!< GPIO pin for the green component.*/
+    GPIO_TypeDef * p_port_blue; /*!< GPIO port for the blue component.*/
+    uint8_t 	pin_blue; /*!< GPIO pin for the blue component.*/
 } stm32f4_display_hw_t;
 /* Global variables */
+
+/**
+ * @brief Array of hardware configurations for the displays.
+ */
+
 static 
 stm32f4_display_hw_t displays_arr[]= {
     [PORT_REAR_PARKING_DISPLAY_ID] ={
@@ -40,6 +50,15 @@ stm32f4_display_hw_t displays_arr[]= {
     }
 };
 /* Private functions -----------------------------------------------------------*/
+
+/**
+ * @brief Retrieves the hardware configuration for a specific display ID.
+ * 
+ * @param display_id The ID of the display to retrieve.
+ * 
+ * @return Pointer to the hardware configuration structure, or NULL if the ID is invalid.
+ */
+
 stm32f4_display_hw_t *_stm32f4_display_get(uint32_t display_id)
 {
     // Return the pointer to the display with the given ID. If the ID is not valid, return NULL.
@@ -53,6 +72,12 @@ stm32f4_display_hw_t *_stm32f4_display_get(uint32_t display_id)
         return NULL;
     }
 }
+
+/**
+ * @brief Configures the PWM timer for the specified display.
+ * 
+ * @param display_id The ID of the display to configure.
+ */
 
 void _timer_pwm_config(uint32_t display_id)
 {
@@ -102,6 +127,13 @@ void _timer_pwm_config(uint32_t display_id)
     }
 }
 /* Public functions -----------------------------------------------------------*/
+
+/**
+ * @brief Initializes the specified display.
+ * 
+ * @param display_id The ID of the display to initialize.
+ */
+
 void port_display_init(uint32_t display_id){
     stm32f4_display_hw_t *p_display = _stm32f4_display_get(display_id);
     stm32f4_system_gpio_config(p_display->p_port_red, p_display->pin_red, STM32F4_GPIO_MODE_AF, STM32F4_GPIO_PUPDR_NOPULL);
@@ -120,6 +152,13 @@ void port_display_init(uint32_t display_id){
     
     port_display_set_rgb(display_id, COLOR_OFF);
 }
+
+/**
+ * @brief Sets the RGB color of the specified display.
+ * 
+ * @param display_id The ID of the display to set the color for.
+ * @param color The RGB color to set.
+ */
 
 void port_display_set_rgb(uint32_t display_id, rgb_color_t color){
     uint8_t r = color.r;
