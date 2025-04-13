@@ -64,4 +64,4 @@ void port_display_init(uint32_t display_id);
  */
 void port_display_set_rgb (uint32_t display_id, rgb_color_t color);
 
-#endif PORT_DISPLAY_SYSTEM_H_
+#endif /*PORT_DISPLAY_SYSTEM_H_*/

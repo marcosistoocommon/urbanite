@@ -40,6 +40,7 @@ void SysTick_Handler(void)
  */
 void EXTI15_10_IRQHandler (void)
 {
+    port_system_systick_resume();
     /* ISR parking button */
     if (port_button_get_pending_interrupt (PORT_PARKING_BUTTON_ID))
     {
@@ -69,6 +70,7 @@ void TIM3_IRQHandler(void){
  * 
  */
 void TIM2_IRQHandler(void){
+    port_system_systick_resume();
     uint32_t current_tick;
     uint32_t ultrasound_id = 0;
     // If it is an UIF interrupt
