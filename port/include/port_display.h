@@ -5,6 +5,7 @@
  * @author Jorge Lopez-Galvez
  * @date 01/04/2025
  */
+
 #ifndef PORT_DISPLAY_SYSTEM_H_
 #define PORT_DISPLAY_SYSTEM_H_
 
@@ -60,7 +61,7 @@ void port_display_init(uint32_t display_id);
  * @param display_id The ID of the display to set the color for.
  * @param color The RGB color to set.
  *
- * 
+ */
 void port_display_set_rgb (uint32_t display_id, rgb_color_t color);
 
-#endif /* PORT_DISPLAY_SYSTEM_H_ */
+#endif PORT_DISPLAY_SYSTEM_H_

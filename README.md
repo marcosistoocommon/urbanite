@@ -143,7 +143,42 @@ Las funciones relacionadas con la FSM del transceptor que hemos programado son:
 
 ## Version 3
 
-En desarrollo
+En esta versión desarrollamos el funcionamiento de un LED para dar una respuesta en función de la distancia medida
+
+**Hardware**
+
+Las funciones relacionadas con el hardware del LED que hemos programado son:
+
+*stm32f4_display.c*
+* _stm32f4_display_get()
+* _timer_pwm_config()
+* port_display_init()
+* port_display_set_rgb()
+
+**Software**
+
+Las funciones relacionadas con la FSM del LED que hemos programado son:
+
+*fsm_display.c*
+* _compute_display_levels()
+* check_set_new_color()
+* check_active()
+* check_off()
+* do_set_on()
+* do_set_color()
+* do_set_off()
+* fsm_display_init()
+* fsm_display_new()
+* fsm_display_destroy()
+* fsm_display_fire()
+* fsm_display_get_distance()
+* fsm_display_set_distance()
+* fsm_display_get_status()
+* fsm_display_set_status()
+* fsm_display_check_activity()
+* fsm_display_get_inner_fsm()
+* fsm_display_get_state()
+* fsm_display_set_state()
 
 ## Version 4
 

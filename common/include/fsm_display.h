@@ -67,6 +67,16 @@ fsm_display_t * fsm_display_new(uint32_t display_id);
 void fsm_display_destroy(fsm_display_t *p_fsm);
 
 /**
+ * @brief Gets the current distance in centimeters.
+ * 
+ * @param p_fsm Pointer to the FSM instance.
+ * 
+ * @return The current distance in centimeters.
+ */
+
+ uint32_t fsm_display_get_distance(fsm_display_t *p_fsm);
+
+/**
  * @brief Sets the distance (in cm) for the FSM to process.
  * 
  * @param p_fsm Pointer to the FSM instance.

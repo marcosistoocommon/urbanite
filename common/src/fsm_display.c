@@ -206,13 +206,6 @@ static void fsm_display_init(fsm_display_t *p_fsm_display, uint32_t display_id){
 
 /* Public functions -----------------------------------------------------------*/
 
-/**
- * @brief Creates a new FSM instance for the display system.
- * 
- * @param display_id The ID of the associated display.
- * 
- * @return Pointer to the newly created FSM instance.
- */
 
 fsm_display_t *fsm_display_new(uint32_t display_id)
 {
@@ -221,73 +214,39 @@ fsm_display_t *fsm_display_new(uint32_t display_id)
     return p_fsm_display;
 }
 
-/**
- * @brief Triggers the FSM to process its current state and transition if necessary.
- * 
- * @param p_fsm Pointer to the FSM instance.
- */
 
 void fsm_display_fire(fsm_display_t *p_fsm)
 {
     fsm_fire(&p_fsm->f); 
 }
 
-/**
- * @brief Destroys an FSM instance and frees its resources.
- * 
- * @param p_fsm Pointer to the FSM instance to destroy.
- */
+
 
 void fsm_display_destroy(fsm_display_t *p_fsm)
 {
     free(&p_fsm->f);
 }
 
-/**
- * @brief Retrieves the inner FSM structure for advanced control.
- * 
- * @param p_fsm Pointer to the FSM instance.
- * 
- * @return Pointer to the inner FSM structure.
- */
+
 
 fsm_t *fsm_display_get_inner_fsm(fsm_display_t *p_fsm)
 {
     return &p_fsm->f;
 }
 
-/**
- * @brief Gets the current state of the FSM.
- * 
- * @param p_fsm Pointer to the FSM instance.
- * 
- * @return The current state of the FSM.
- */
+
 
 uint32_t fsm_display_get_state(fsm_display_t *p_fsm)
 {
     return p_fsm->f.current_state;
 }
 
-/**
- * @brief Gets the current distance in centimeters.
- * 
- * @param p_fsm Pointer to the FSM instance.
- * 
- * @return The current distance in centimeters.
- */
 
 uint32_t fsm_display_get_distance(fsm_display_t *p_fsm)
 {
     return p_fsm->distance_cm;
 }
 
-/**
- * @brief Sets the distance for the FSM to process.
- * 
- * @param p_fsm Pointer to the FSM instance.
- * @param distance_cm The distance in centimeters.
- */
 
 void fsm_display_set_distance(fsm_display_t *p_fsm, uint32_t distance_cm)
 {
@@ -295,49 +254,24 @@ void fsm_display_set_distance(fsm_display_t *p_fsm, uint32_t distance_cm)
     p_fsm->new_color = true;
 }
 
-/**
- * @brief Gets the current status of the FSM (active or paused).
- * 
- * @param p_fsm Pointer to the FSM instance.
- * 
- * @return `true` if the FSM is active, `false` otherwise.
- */
 
 bool fsm_display_get_status(fsm_display_t *p_fsm)
 {
     return p_fsm->status;
 }
 
-/**
- * @brief Sets the status of the FSM (active or paused).
- * 
- * @param p_fsm Pointer to the FSM instance.
- * @param status `true` to activate the FSM, `false` to pause it.
- */
 
 void fsm_display_set_status(fsm_display_t *p_fsm, bool status)
 {
     p_fsm->status = status;
 }
 
-/**
- * @brief Sets the current state of the FSM.
- * 
- * @param p_fsm Pointer to the FSM instance.
- * @param state The state to set.
- */
 
 void fsm_display_set_state(fsm_display_t *p_fsm, int8_t state)
 {
     p_fsm->f.current_state = state;
 }
 
-/**
- * @brief Checks if the FSM is currently active.
- * 
- * @param p_fsm Pointer to the FSM instance.
- * @return `true` if the FSM is active, `false` otherwise.
- */
 
 bool fsm_display_check_activity(fsm_display_t *p_fsm)
 {

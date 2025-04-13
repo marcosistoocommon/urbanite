@@ -128,11 +128,6 @@ void _timer_pwm_config(uint32_t display_id)
 }
 /* Public functions -----------------------------------------------------------*/
 
-/**
- * @brief Initializes the specified display.
- * 
- * @param display_id The ID of the display to initialize.
- */
 
 void port_display_init(uint32_t display_id){
     stm32f4_display_hw_t *p_display = _stm32f4_display_get(display_id);
@@ -152,13 +147,6 @@ void port_display_init(uint32_t display_id){
     
     port_display_set_rgb(display_id, COLOR_OFF);
 }
-
-/**
- * @brief Sets the RGB color of the specified display.
- * 
- * @param display_id The ID of the display to set the color for.
- * @param color The RGB color to set.
- */
 
 void port_display_set_rgb(uint32_t display_id, rgb_color_t color){
     uint8_t r = color.r;
