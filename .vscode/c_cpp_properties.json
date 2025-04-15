@@ -29,11 +29,12 @@
                 "${workspaceFolder}/port/include",
                 "${workspaceFolder}/port/stm32f4/**",
                 "${workspaceFolder}/common/include",
-                "/mnt/c/Users/mpere/Desktop/Proyecto_SDG2_V1/MatrixMCU/drivers/stm32f4xx/CMSIS/Device/ST/STM32F4xx/Include",
+                "/mnt/c/Users/mpere/Desktop/Proyecto_SDG2/MatrixMCU/drivers/stm32f4xx/CMSIS/Device/ST/STM32F4xx/Include",
                 "${workspaceFolder}/port/stm32f4/include",
-                "/mnt/c/Users/mpere/Desktop/Proyecto_SDG2_V2/MatrixMCU/drivers/stm32f4xx/CMSIS/Device/ST/STM32F4xx/Include",
-                "/mnt/c/Users/mpere/Desktop/Proyecto_SDG2_V2/MatrixMCU/drivers/stm32f4xx/CMSIS/Core/Include",
-                "/mnt/c/Users/mpere/Desktop/Proyecto_SDG2_V2/MatrixMCU/lib/fsm/include"
+                "/mnt/c/Users/mpere/Desktop/Proyecto_SDG2/MatrixMCU/drivers/stm32f4xx/CMSIS/Device/ST/STM32F4xx/Include",
+                "/mnt/c/Users/mpere/Desktop/Proyecto_SDG2/MatrixMCU/drivers/stm32f4xx/CMSIS/Core/Include",
+                "/mnt/c/Users/mpere/Desktop/Proyecto_SDG2/MatrixMCU/lib/fsm/include",
+                "/mnt/c/Users/mpere/Desktop/Proyecto_SDG2/MatrixMCU/lib/fsm/include"
             ],
             "defines": [
                 "STM32F446xx"

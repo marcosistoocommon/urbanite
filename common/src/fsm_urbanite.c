@@ -70,14 +70,14 @@ static void do_display_distance (fsm_t *p_this){
         if (distance_cm < (WARNING_MIN_CM / 2)) {
             fsm_display_set_distance(p_fsm_urbanite->p_fsm_display_rear, distance_cm);
             fsm_display_set_status(p_fsm_urbanite->p_fsm_display_rear, true);
+            printf("[URBANITE][%ld] DANGER: Distance: %ld cm\n", port_system_get_millis(), distance_cm);
         } else {
             fsm_display_set_status(p_fsm_urbanite->p_fsm_display_rear, false);
         }
     } else {
         fsm_display_set_distance(p_fsm_urbanite->p_fsm_display_rear, distance_cm);
+        printf("[URBANITE][%ld] Distance: %ld cm\n", port_system_get_millis(), distance_cm);
     }
-
-    printf("[URBANITE][%ld] Distance: %ld cm\n", port_system_get_millis(), distance_cm);
 }
 
 static void do_pause_display (fsm_t *p_this){

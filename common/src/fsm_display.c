@@ -40,7 +40,6 @@ struct fsm_display_t
 
 
 /* Private functions -----------------------------------------------------------*/
-//Falta posible return
 
 /**
  * @brief Computes the RGB color levels based on the distance.
