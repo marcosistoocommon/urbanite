@@ -237,6 +237,13 @@ static void do_sleep_while_measure (fsm_t *p_this){
     port_system_sleep();
 }
 
+/**
+ * @brief Puts the system to sleep while off. 
+ *
+ * @param p_this Pointer to the FSM instance.
+ */
+ 
+
 static void do_sleep_off (fsm_t *p_this){
     port_system_sleep();
 }
@@ -316,7 +323,7 @@ void fsm_urbanite_fire (fsm_urbanite_t *p_fsm_urbanite){
     fsm_fire(&p_fsm_urbanite->f);
 }
  
-**
+/**
  * @brief Destroys the Urbanite FSM instance and frees its resources.
  * 
  * @param p_fsm Pointer to the Urbanite FSM instance to destroy.

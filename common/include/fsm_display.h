@@ -133,11 +133,11 @@ bool fsm_display_check_activity(fsm_display_t *p_fsm);
 fsm_t * fsm_display_get_inner_fsm (fsm_display_t *p_fsm);
 
 /**
- * @brief Retrieves the inner FSM structure for advanced control.
+ * @brief Retrieves the current state of the FSM.
  * 
  * @param p_fsm Pointer to the FSM instance.
  * 
- * @return Pointer to the inner FSM structure.
+ * @return Current state.
  */
  
 uint32_t fsm_display_get_state(fsm_display_t *p_fsm);
