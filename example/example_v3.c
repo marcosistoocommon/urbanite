@@ -23,7 +23,7 @@ int main(void)
         fsm_display_set_status(p_fsm_display_rear, true);
 
         // Set a new distance to the object as the vehicle moves backwards in steps of 1 cm
-        for (int16_t distance_cm = 220; distance_cm >= 0; distance_cm--)
+        for (int16_t distance_cm = 250; distance_cm >= 0; distance_cm--)
         {
             fsm_display_set_distance(p_fsm_display_rear, distance_cm);
             fsm_display_fire(p_fsm_display_rear);
