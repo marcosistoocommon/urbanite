@@ -182,7 +182,53 @@ Las funciones relacionadas con la FSM del LED que hemos programado son:
 
 ## Version 4
 
-En desarrollo
+En esta versión implementamos la fsm que integra todas las versiones anteriores, además de la gestión de consumo. Esta estará regulada por la pulsación del botón de la versión 1. En función del tiempo que se mantenga pulsado dicho botón, el sistema se encenderá, se pondrá en pausa, o se apagará.
+
+**Hardware**
+
+Para la gestión de consumo, a nivel de hardware, hemos programado las siguientes funciones
+
+*stm32f4_system.c*
+* port_system_power_stop()
+* port_system_power_sleep()
+* port_system_systick_suspend()
+* port_system_systick_resume()
+* port_system_sleep()
+
+**Software**
+
+Para la implementación tanto del sistema completo urbanite como de la gestión de consumo de este, hemos programado las siguientes funciones:
+
+*fsm_button.c*
+* fsm_button_check_activity()
+
+*fsm_ultrasound.c*
+* fsm_ultrasound_check_activity()
+
+*fsm_display.c*
+* fsm_display_check_activity()
+
+*fsm_urbanite.c*
+* fsm_urbanite_new()
+* fsm_urbanite_fire()
+* fsm_urbanite_destroy()
+* check_on()
+* check_off()
+* check_new_measure()
+* check_pause_display()
+* check_activity()
+* check_no_activity()
+* check_activity_in_measure()
+* do_start_up_measure()
+* do_display_distance()
+* do_pause_display()
+* do_stop_urbanite()
+* do_sleep_while_off()
+* do_sleep_while_on()
+* do_sleep_while_measure()
+* do_sleep_off()
+* fsm_urbanite_init()
+
 
 ## Version 5
 

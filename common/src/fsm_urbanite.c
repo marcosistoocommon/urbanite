@@ -292,17 +292,7 @@ static void fsm_urbanite_init (fsm_urbanite_t *p_fsm_urbanite, fsm_button_t *p_f
     p_fsm_urbanite->is_paused = false;
 }
 
-/**
- * @brief Creates a new Urbanite FSM instance.
- * 
- * @param p_fsm_button Pointer to the button FSM.
- * @param on_off_press_time_ms Time in milliseconds to toggle the system on/off.
- * @param pause_display_time_ms Time in milliseconds to pause/resume the display.
- * @param p_fsm_ultrasound_rear Pointer to the rear ultrasound FSM.
- * @param p_fsm_display_rear Pointer to the rear display FSM.
- *
- * @return Pointer to the newly created Urbanite FSM instance.
- */
+
 
 fsm_urbanite_t *fsm_urbanite_new (fsm_button_t *p_fsm_button, uint32_t on_off_press_time_ms, uint32_t pause_display_time_ms, fsm_ultrasound_t *p_fsm_ultrasound_rear, fsm_display_t *p_fsm_display_rear){
 
@@ -313,21 +303,12 @@ fsm_urbanite_t *fsm_urbanite_new (fsm_button_t *p_fsm_button, uint32_t on_off_pr
         return p_fsm_urbanite;
 }
 
-/**
- * @brief Triggers the Urbanite FSM to process its current state and transition if necessary.
- * 
- * @param p_fsm_urbanite Pointer to the Urbanite FSM instance.
- */
 
 void fsm_urbanite_fire (fsm_urbanite_t *p_fsm_urbanite){
     fsm_fire(&p_fsm_urbanite->f);
 }
  
-/**
- * @brief Destroys the Urbanite FSM instance and frees its resources.
- * 
- * @param p_fsm Pointer to the Urbanite FSM instance to destroy.
- */
+
 
 void fsm_urbanite_destroy (fsm_urbanite_t *p_fsm){
     free(&p_fsm->f);
