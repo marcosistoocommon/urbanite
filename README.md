@@ -229,7 +229,8 @@ Para la implementación tanto del sistema completo urbanite como de la gestión 
 * do_sleep_off()
 * fsm_urbanite_init()
 
+La figura inferior enseña el funcionamiento de la señal eco y como con esta se calcula la distancia
 
-## Version 5
 
-En desarrollo
+
+![Señal Eco y relación con la distancia](docs/assets/imgs/foto.png)
